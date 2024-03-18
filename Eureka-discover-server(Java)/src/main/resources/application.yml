@@ -1,0 +1,12 @@
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+server:
+  port: 8761
+
+app:
+  eureka:
+    username: eureka
+    password: password
+
