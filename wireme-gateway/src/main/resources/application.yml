@@ -1,0 +1,36 @@
+
+
+spring:
+ cloud:
+   gateway:
+     routes:
+       - id: product-service
+         uri: lb://product-service/
+         predicates:
+           - Path=/product/**
+         filters:
+           - AuthenticationFilter
+
+
+       - id: order-service
+         uri: lb://order-service/
+         predicates:
+           - Path=/order/**
+         filters:
+           - AuthenticationFilter
+
+       - id: auth-service
+         uri: lb://auth-service/
+         predicates:
+           - Path=/auth/**
+
+ application:
+   name: WIREME-GATEWAY
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka
+
+server:
+  port: 8089
