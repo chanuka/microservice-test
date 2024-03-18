@@ -1,0 +1,31 @@
+spring:
+  messages:
+    basename: messages
+    encoding: UTF-8
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        jdbc:
+          batch_size: 50
+  datasource:
+    url: jdbc:mysql://localhost:3306/haradb_new?serverTimezone=Asia/Colombo&cachePrepStmts=true&useServerPrepStmts=true&rewriteBatchedStatements=true
+    username: root
+    password: password
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+
+application:
+  jwt:
+    secretKey: securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure
+    tokenPrefix: Bearer
+    tokenExpirationAfterMillis: 604800000       #86400000,3600000,60,000  Token is issued for a week, has to change once go live
+  refresh:
+    tokenExpirationAfterMillis: 120000
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem

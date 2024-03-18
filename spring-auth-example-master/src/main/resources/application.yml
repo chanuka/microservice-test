@@ -1,0 +1,26 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /auth
+#  error:
+#    whitelabel:
+#      enabled: false
+#  compression:
+#    enabled: false
+#spring:
+#  web:
+#    resources:
+#      add-mappings: false
+#  jackson:
+#    serialization: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: auth-service
