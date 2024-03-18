@@ -1,0 +1,20 @@
+//create public key and the private key in one go (this will create the private key as well)
+openssl req -x509 -days 365 -nodes -new -out ca.crt
+
+//next we must add the above generated root public certificate on the target devices operating system root certificate store
+
+//next we must generate the private key for the server
+openssl genrsa  -out server.key 2048
+
+//now we create the csr with above generated private key (certificate sign request)
+openssl req -nodes -new -key server.key -out request.csr
+
+//next we create certification extension config file  (the subject alt name should match the calling host)
+cert.ext
+
+//next we generate a signed certitificate for the server using config file and ca pub cert and private key (the common name of this certificate
+//should match the root certificates common name)
+openssl x509 -req -in request.csr -CA ca.cert -CAkey ca.key -CAcreateserial -out server.crt -days 825 -sha256 -extfile cert.ext
+
+
+
