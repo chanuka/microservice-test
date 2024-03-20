@@ -22,10 +22,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @EnableConfigurationProperties(RsaKeyProperties.class)
 @SpringBootApplication
-public class SpringEchoApp {
+public class AuthServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringEchoApp.class, args);
+		SpringApplication.run(AuthServerApplication.class, args);
 	}
 
 }
