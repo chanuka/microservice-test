@@ -1,4 +1,4 @@
-package com.cba.core.order.controller;
+package com.cba.core.inventory.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
