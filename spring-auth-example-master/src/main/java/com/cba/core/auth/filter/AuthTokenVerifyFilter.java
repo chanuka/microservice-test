@@ -91,7 +91,7 @@ public class AuthTokenVerifyFilter extends OncePerRequestFilter {
                                             (method.equals("DELETE") && (permission.getDeleted() != 0)))
                     ));
 
-            access = true; /// /
+            access = true; /// / remove this
             if (!access) {
                 logger.debug(messageSource.getMessage("GLOBAL_TOKEN_DENIED_ERROR", null, currentLocale));
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());

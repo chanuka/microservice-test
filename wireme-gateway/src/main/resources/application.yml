@@ -17,6 +17,11 @@ spring:
          filters:
            - AuthenticationFilter
 
+       - id: inventory-service
+         uri: lb://inventory-service/
+         predicates:
+           - Path=/inventory/**
+
        - id: auth-service
          uri: lb://auth-service/
          predicates:

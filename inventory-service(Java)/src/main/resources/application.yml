@@ -1,7 +1,7 @@
 server:
-  port: 8092
+  port: 8094
   servlet:
-    context-path: /order
+    context-path: /inventory
 
 eureka:
   client:
@@ -9,5 +9,5 @@ eureka:
       defaultZone: http://eureka:password@localhost:8761/eureka
 spring:
   application:
-    name: order-service
+    name: inventory-service
 
