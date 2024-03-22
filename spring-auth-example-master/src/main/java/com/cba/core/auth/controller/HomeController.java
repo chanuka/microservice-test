@@ -76,7 +76,7 @@ public class HomeController {
                                         (method.equals("DELETE") && (permission.getDeleted() != 0)))
                 ));
 
-        if ("api".equals(resource)) { // remove this
+        if ("api".equals(resource) || "actuator".equals(resource)) { // remove this
             access = true;
         }
 

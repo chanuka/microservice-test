@@ -11,3 +11,15 @@ spring:
   application:
     name: inventory-service
 
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+

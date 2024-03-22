@@ -6,16 +6,16 @@ spring:
          uri: lb://product-service/
          predicates:
            - Path=/product/**
-         filters:
-           - AuthenticationFilter
+#         filters:
+#           - AuthenticationFilter
 
 
        - id: order-service
          uri: lb://order-service/
          predicates:
            - Path=/order/**
-         filters:
-           - AuthenticationFilter
+#         filters:
+#           - AuthenticationFilter
 
        - id: inventory-service
          uri: lb://inventory-service/
