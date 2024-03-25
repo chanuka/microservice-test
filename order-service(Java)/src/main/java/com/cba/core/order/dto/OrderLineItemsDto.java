@@ -1,4 +1,4 @@
-package dto;
+package com.cba.core.order.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -10,6 +10,12 @@ eureka:
 spring:
   application:
     name: product-service
+  cache:
+    redis:
+      host: localhost
+      port: 6379
+#      time-to-live: 100S
+    type: redis
 
 management:
   zipkin:
