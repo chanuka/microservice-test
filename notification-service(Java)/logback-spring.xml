@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
  
-    <property name="LOG_LOCATION" value="/opt/temp/order" />
+    <property name="LOG_LOCATION" value="/opt/temp/notification" />
 	<Property name="LOG_PATTERN" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1}- %msg%n"/>
  
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -87,13 +87,13 @@
         <appender-ref ref="CONSOLE"/>
     </root>
 	 
-	<logger name="com.cba.core.wirememobile" level="ERROR" additivity="true">
+	<logger name="com.cba.core.notification" level="ERROR" additivity="true">
         <appender-ref ref="ASYNCERROR"/>
     </logger>
-	<logger name="com.cba.core.wirememobile" level="INFO" additivity="true">
+	<logger name="com.cba.core.notification" level="INFO" additivity="true">
         <appender-ref ref="ASYNCINFO"/>
     </logger>
-	<logger name="com.cba.core.wirememobile" level="DEBUG" additivity="true">
+	<logger name="com.cba.core.notification" level="DEBUG" additivity="true">
         <appender-ref ref="ASYNCDEBUG"/>
     </logger>
 	

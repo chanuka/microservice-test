@@ -1,5 +1,5 @@
 FROM openjdk:17-oracle
-ADD target/order.jar order.jar
-ADD logback-spring.xml /opt/conf/order/logback-spring.xml
-EXPOSE 8092
-ENTRYPOINT ["java", "-jar", "order.jar"]
+ADD target/inventory.jar inventory.jar
+ADD logback-spring.xml /opt/conf/inventory/logback-spring.xml
+EXPOSE 8094
+ENTRYPOINT ["java", "-jar", "inventory.jar"]

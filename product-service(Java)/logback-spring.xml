@@ -87,13 +87,13 @@
         <appender-ref ref="CONSOLE"/>
     </root>
 	 
-	<logger name="com.cba.core.wirememobile" level="ERROR" additivity="true">
+	<logger name="com.cba.core.product" level="ERROR" additivity="true">
         <appender-ref ref="ASYNCERROR"/>
     </logger>
-	<logger name="com.cba.core.wirememobile" level="INFO" additivity="true">
+	<logger name="com.cba.core.product" level="INFO" additivity="true">
         <appender-ref ref="ASYNCINFO"/>
     </logger>
-	<logger name="com.cba.core.wirememobile" level="DEBUG" additivity="true">
+	<logger name="com.cba.core.product" level="DEBUG" additivity="true">
         <appender-ref ref="ASYNCDEBUG"/>
     </logger>
 	

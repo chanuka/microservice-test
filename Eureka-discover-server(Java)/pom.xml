@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.8</version>
-        <relativePath />
+        <relativePath/>
     </parent>
     <groupId>com.cba.core.eureka</groupId>
     <artifactId>demo</artifactId>
@@ -48,6 +48,20 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <from>
+                        <image>eclipse-temurin:17.0.4.1_1-jre</image>
+                    </from>
+                    <to>
+                        <image>registry.hub.docker.com/chanudocker1/eureka-service</image>
+                    </to>
+                </configuration>
+            </plugin>
         </plugins>
+        <finalName>eureka</finalName>
     </build>
 </project>

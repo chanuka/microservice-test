@@ -26,10 +26,10 @@
         <!--			<groupId>org.springframework.cloud</groupId>-->
         <!--			<artifactId>spring-cloud-starter-loadbalancer</artifactId>-->
         <!--		</dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
@@ -98,7 +98,21 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <from>
+                        <image>eclipse-temurin:17.0.4.1_1-jre</image>
+                    </from>
+                    <to>
+                        <image>registry.hub.docker.com/chanudocker1/gateway-service</image>
+                    </to>
+                </configuration>
+            </plugin>
         </plugins>
+        <finalName>gateway</finalName>
     </build>
     <repositories>
         <repository>
