@@ -1,2 +1,2 @@
-# wiremecore-mobile
-This is to backend for the mobile app
+# notification service
+This is the notification service
