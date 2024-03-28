@@ -1,2 +1,2 @@
 # wiremecore-mobile
-This is to backend for the mobile app
+This is the service discovery server-eureka
