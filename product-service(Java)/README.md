@@ -1,2 +1,2 @@
-# wiremecore-mobile
-This is to backend for the mobile app
+# product service
+This is the product service
