@@ -1,2 +1,2 @@
-# wiremecore-mobile
-This is to backend for the mobile app
+# inventory-service
+This is the inventory-service
