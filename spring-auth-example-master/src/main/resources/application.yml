@@ -2,33 +2,10 @@ server:
   port: 8088
   servlet:
     context-path: /auth
-#  error:
-#    whitelabel:
-#      enabled: false
-#  compression:
-#    enabled: false
-#spring:
-#  web:
-#    resources:
-#      add-mappings: false
-#  jackson:
-#    serialization: true
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://eureka:password@localhost:8761/eureka
 
 spring:
   profiles:
-    active: dev
+    active: stage
   application:
     name: auth-service
 
-management:
-  zipkin:
-    tracing:
-      endpoint: http://localhost:9411/api/v2/spans
-  tracing:
-    sampling:
-      probability: 1.0

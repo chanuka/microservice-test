@@ -23,6 +23,13 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public ResponseEntity<String> getOrder(@PathVariable Long orderId) {
         // Business logic for fetching an order
+        System.out.println("called me");
+
+        try {
+            orderService.findAll();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         return ResponseEntity.ok("Order details for ID: " + orderId);
     }
 

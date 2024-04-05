@@ -1,0 +1,38 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@discovery-server:8761/eureka
+spring:
+  application:
+    name: product-service
+#  cache:
+#    redis:
+#      url: redis://cache:6379 do not use any of this, not work in docker environment correctly
+    #  host: host.docker.internal
+    #  port: 6379
+    #      time-to-live: 100S
+#    type: redis
+
+  data:
+    redis:
+      host: cache
+      port: 6379
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

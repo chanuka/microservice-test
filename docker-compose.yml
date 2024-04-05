@@ -1,0 +1,147 @@
+version: '3.7'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      
+  cache:
+    image: redis:latest
+    container_name: cache
+    ports:
+      - "6379:6379"
+    #command: ["redis-server", "--bind", "cache", "--port", "6379"]
+    command: redis-server & --save 20 1 --loglevel warning 
+    volumes: 
+      - cache:/data
+
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+
+  discovery-server:
+    image: registry.hub.docker.com/chanudocker1/discovery-server
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+    depends_on:
+      - zipkin
+
+  api-gateway:
+    image: registry.hub.docker.com/chanudocker1/gateway-service
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+    depends_on:
+      - zipkin
+      - discovery-server
+ #     - keycloak
+
+  product-service:
+    container_name: product-service
+    image: registry.hub.docker.com/chanudocker1/product-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+    links:
+      - cache:cache
+    depends_on:
+ #     - mongo
+      - discovery-server
+      - api-gateway
+      - cache
+
+  order-service:
+    container_name: order-service
+    image: registry.hub.docker.com/chanudocker1/order-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+  #    - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-order:5431/order-service
+    depends_on:
+      - cache
+      - broker
+      - zipkin
+      - discovery-server
+      - api-gateway
+
+  inventory-service:
+    container_name: inventory-service
+    image: registry.hub.docker.com/chanudocker1/inventory-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+   #   - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-inventory:5432/inventory-service
+    depends_on:
+      - discovery-server
+      - api-gateway
+
+  notification-service:
+    container_name: notification-service
+    image: registry.hub.docker.com/chanudocker1/notification-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+    depends_on:
+      - zipkin
+      - broker
+      - discovery-server
+      - api-gateway
+
+  prometheus:
+    image: prom/prometheus:v2.37.1
+    container_name: prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./Prometheus-Grafana/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - product-service
+      - inventory-service
+      - order-service
+      - notification-service
+
+  grafana:
+    image: grafana/grafana-oss:8.5.2
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./Prometheus-Grafana/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+
+volumes:
+  cache:
+    driver: local

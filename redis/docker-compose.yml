@@ -1,14 +1,31 @@
 version: "3"
 services:
   cache:
-    image: redis:6.2-alpine
-    restart: always
+    image: redis:latest
+#    restart: always
     ports:
       - '6379:6379'
 #    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-    command: redis-server --save 20 1 --loglevel warning
-    volumes: 
-      - cache:/data
-volumes:
-  cache:
-    driver: local
+#    command: redis-server --save 20 1 --loglevel warning 
+#    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: ["redis-server", "--bind", "cache", "--port", "6379"]
+#    volumes: 
+#      - cache:/data
+#      - ./redis.conf:/tmp/redis.conf
+#      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      
+  product-service:
+    container_name: product-service
+    image: registry.hub.docker.com/chanudocker1/product-service
+    ports:
+      - '8093:8093'    
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+    depends_on:
+      - cache
+
+#volumes:
+#  cache:
+#    driver: local
+    
+    
