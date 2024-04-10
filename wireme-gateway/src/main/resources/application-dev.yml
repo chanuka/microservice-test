@@ -26,7 +26,8 @@ spring:
           uri: lb://auth-service/
           predicates:
             - Path=/auth/**
-
+    discovery:
+      enabled: true
   application:
     name: WIREME-GATEWAY
 

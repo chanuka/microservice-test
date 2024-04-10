@@ -5,6 +5,9 @@ eureka:
 spring:
   application:
     name: inventory-service
+  cloud:
+    discovery:
+      enabled: true
 
 management:
   zipkin:

@@ -6,8 +6,8 @@ spring:
           uri: lb://product-service/
           predicates:
             - Path=/product/**
-        #         filters:
-        #           - AuthenticationFilter
+          filters:
+            - AuthenticationFilter
 
 
         - id: order-service
@@ -26,6 +26,8 @@ spring:
           uri: lb://auth-service/
           predicates:
             - Path=/auth/**
+    discovery:
+      enabled: true
 
   application:
     name: WIREME-GATEWAY

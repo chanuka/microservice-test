@@ -14,12 +14,17 @@ spring:
     hikari:
       maximum-pool-size: 10
       minimum-idle: 5
+  cloud:
+    discovery:
+      enabled: true
 
 application:
   jwt:
     secretKey: securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure
     tokenPrefix: Bearer
     tokenExpirationAfterMillis: 604800000       #86400000,3600000,60,000  Token is issued for a week, has to change once go live
+  refresh:
+    tokenExpirationAfterMillis: 120000
 
 rsa:
   private-key: classpath:certs/private.pem

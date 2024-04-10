@@ -34,29 +34,13 @@ services:
     volumes: 
       - cache:/data
 
+
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
     ports:
       - "9411:9411"
 
-  auth-service:
-    image: registry.hub.docker.com/chanudocker1/auth-service
-    container_name: auth-service
-    #ports:
-    #  - "8088:8088"
-    expose:
-      - "8088"    
-    environment:
-      - SPRING_PROFILES_ACTIVE=stage
-      - DB_HOST=host.docker.internal
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=password 
-      - DB_NAME=haradb_new 
-    depends_on:
-      - discovery-server
-      
   discovery-server:
     image: registry.hub.docker.com/chanudocker1/discovery-server
     container_name: discovery-server
@@ -67,36 +51,11 @@ services:
     depends_on:
       - zipkin
 
-  proxy-server:
-    image: chanudocker1/demorep:my-custom-nginx-reverse-proxy1
-    container_name: proxy-server
+  api-gateway:
+    image: registry.hub.docker.com/chanudocker1/gateway-service
+    container_name: api-gateway
     ports:
-      - "80:80"
-      - "443:443"
-    expose:
-      - "80"
-      - "443"
-      
-  api-gateway1:
-    image: registry.hub.docker.com/chanudocker1/gateway-service
-    container_name: api-gateway1
-    #ports:
-    #  - "8080:8080"
-    expose:
-      - "8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=stage
-      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
-    depends_on:
-      - zipkin
-      - discovery-server
- #     - keycloak
- 
-  api-gateway2:
-    image: registry.hub.docker.com/chanudocker1/gateway-service
-    container_name: api-gateway2
-    #ports:
-    #  - "8080:8080"
+      - "8080:8080"
     expose:
       - "8080"
     environment:
@@ -107,8 +66,8 @@ services:
       - discovery-server
  #     - keycloak
 
-  product-service1:
-    container_name: product-service1
+  product-service:
+    container_name: product-service
     image: registry.hub.docker.com/chanudocker1/product-service
     environment:
       - SPRING_PROFILES_ACTIVE=stage
@@ -117,22 +76,7 @@ services:
     depends_on:
  #     - mongo
       - discovery-server
-      - api-gateway1
-      - api-gateway2
-      - cache
-      
-  product-service2:
-    container_name: product-service2
-    image: registry.hub.docker.com/chanudocker1/product-service
-    environment:
-      - SPRING_PROFILES_ACTIVE=stage
-    links:
-      - cache:cache
-    depends_on:
- #     - mongo
-      - discovery-server
-      - api-gateway1
-      - api-gateway2
+      - api-gateway
       - cache
 
   order-service:
@@ -145,8 +89,7 @@ services:
       - broker
       - zipkin
       - discovery-server
-      - api-gateway1
-      - api-gateway2
+      - api-gateway
 
   inventory-service:
     container_name: inventory-service
@@ -155,8 +98,7 @@ services:
       - SPRING_PROFILES_ACTIVE=stage
     depends_on:
       - discovery-server
-      - api-gateway1
-      - api-gateway2
+      - api-gateway
 
   notification-service:
     container_name: notification-service
@@ -167,8 +109,7 @@ services:
       - zipkin
       - broker
       - discovery-server
-      - api-gateway1
-      - api-gateway2
+      - api-gateway
 
   prometheus:
     image: prom/prometheus:v2.37.1
@@ -179,8 +120,7 @@ services:
     volumes:
       - ./Prometheus-Grafana/prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
-      - product-service1
-      - product-service2
+      - product-service
       - inventory-service
       - order-service
       - notification-service

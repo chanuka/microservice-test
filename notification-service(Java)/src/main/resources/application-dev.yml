@@ -5,6 +5,9 @@ eureka:
 spring:
   application:
     name: notification-service
+  cloud:
+    discovery:
+      enabled: true
   kafka:
     bootstrap-servers: localhost:9092
     template:

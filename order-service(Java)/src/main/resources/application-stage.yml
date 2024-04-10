@@ -5,6 +5,11 @@ eureka:
 spring:
   application:
     name: order-service
+  cloud:
+    discovery:
+      enabled: true
+  #      above line is important to resolve ip addresses in docker env
+
   data:
     redis:
       host: cache

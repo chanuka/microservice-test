@@ -5,6 +5,10 @@ eureka:
 spring:
   application:
     name: inventory-service
+  cloud:
+    discovery:
+      enabled: true
+#      above line is important to resolve ip addresses in docker env
 
 management:
   zipkin:
