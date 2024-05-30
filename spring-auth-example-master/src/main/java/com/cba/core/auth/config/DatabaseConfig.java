@@ -7,7 +7,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration // enable when needed----
 public class DatabaseConfig {
 
     @Value("${DB_URL}")
