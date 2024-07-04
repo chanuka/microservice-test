@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: auth-service
+  name: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  strategy: {}
+  template:
+    metadata:
+
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: stage
+            - name: DB_HOST
+              value: host.docker.internal
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              value: password
+            - name: DB_NAME
+              value: haradb_new
+            - name: EUREKA_INSTANCE_PREFERIPADDRESS
+              value: "true" 
+          image: chanudocker1/auth-service:1.0.0
+          name: auth-service
+          ports:
+            - containerPort: 8088
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: auth-service
+  name: auth-service
+spec:
+  type: NodePort
+  ports:
+    - name: "8088"
+      port: 8088
+      targetPort: 8088
+      nodePort: 30077
+  selector:
+    app: auth-service
+status:
+  loadBalancer: {}

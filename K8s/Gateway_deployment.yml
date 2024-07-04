@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gateway-service
+  name: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  strategy: {}
+  template:
+    metadata:
+
+      labels:
+        app: gateway-service
+    spec:
+      containers:
+        - env:
+            - name: EUREKA_INSTANCE_PREFERIPADDRESS
+              value: "true"        
+          image: chanudocker1/gateway-service:1.0.0
+          name: gateway-service
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gateway-service
+  name: gateway-service
+spec:
+  type: NodePort
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+      nodePort: 30081
+  selector:
+    app: gateway-service
+status:
+  loadBalancer: {}

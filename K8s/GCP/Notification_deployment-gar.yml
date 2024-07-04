@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: notification-service
+  name: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  strategy: {}
+  template:
+    metadata:
+
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - image: asia-south1-docker.pkg.dev/bamboo-zone-425706-v9/repo2/notification-service:v1
+          name: notification-service
+          ports:
+            - containerPort: 8091
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: notification-service
+  name: notification-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: "8091"
+      port: 8091
+      targetPort: 8091
+  selector:
+    app: notification-service
+status:
+  loadBalancer: {}

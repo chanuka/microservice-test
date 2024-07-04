@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  strategy: {}
+  template:
+    metadata:
+
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: password
+            - name: GF_SECURITY_ADMIN_USER
+              value: admin
+          image: grafana/grafana-oss:latest
+          name: grafana
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - mountPath: /data
+              name: grafana-storage
+          resources: {}
+      volumes:
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-pvc
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: grafana
+status:
+  loadBalancer: {}
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: grafana-pvc
+  name: grafana-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
