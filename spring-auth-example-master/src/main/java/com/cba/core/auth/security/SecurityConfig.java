@@ -32,7 +32,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Profile(value = {"dev", "stage"})
+@Profile(value = {"dev", "stage","docker"})
 public class SecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;

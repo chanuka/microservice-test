@@ -17,7 +17,7 @@ public class InventoryService {
     @SneakyThrows
     public List<InventoryResponse> isInStock(List<String> skuCode) {
         log.info("Checking Inventory");
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         List<InventoryResponse> inventoryResponses = new ArrayList<>();
         inventoryResponses.add(InventoryResponse.builder().skuCode("001").isInStock(true).build());
         inventoryResponses.add(InventoryResponse.builder().skuCode("002").isInStock(true).build());

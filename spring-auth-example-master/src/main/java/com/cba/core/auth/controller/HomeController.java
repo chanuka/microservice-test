@@ -42,6 +42,10 @@ public class HomeController {
                                            @RequestParam String resource,
                                            @RequestParam String method) {
 
+        System.out.println("token:"+ token);
+        System.out.println("resource:"+ resource);
+        System.out.println("method:"+ method);
+
         Locale currentLocale = LocaleContextHolder.getLocale();// works only when as local statement
 
         Jwt claimsJws = jwtUtil.validateJwtToken(token, decoder);

@@ -2,6 +2,7 @@ package com.cba.core.product.controller;
 
 import com.cba.core.product.dto.ProductDto;
 import com.cba.core.product.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/{productId}")
-    public ResponseEntity<String> getProduct(@PathVariable Long productId) {
+    public ResponseEntity<String> getProduct(@PathVariable Long productId, HttpServletRequest request) {
         // Business logic for fetching a product
         System.out.println("called me");
         try {
@@ -22,7 +23,7 @@ public class ProductController {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return ResponseEntity.ok("Product details for ID: " + productId);
+        return ResponseEntity.ok("Product details for ID: " + productId + " and IP :" + request.getLocalAddr());
     }
 
     @PostMapping("/add")

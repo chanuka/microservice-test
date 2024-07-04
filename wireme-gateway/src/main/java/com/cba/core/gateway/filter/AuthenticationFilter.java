@@ -52,10 +52,11 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 //                                String.class);
 //                    jwtUtil.validateToken(authHeader);
 
-
+                    System.out.println("This is the latest1");
                         UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
                                 .scheme("http")
                                 .host("auth-service")
+                                .port(8088)
                                 .path("/auth/validate")
                                 .queryParam("token", authHeader)
                                 .queryParam("resource", resourceArray[2])

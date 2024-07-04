@@ -1,0 +1,47 @@
+spring:
+  messages:
+    basename: messages
+    encoding: UTF-8
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: false
+        jdbc:
+          batch_size: 50
+  datasource:
+    url: jdbc:mysql://123.231.95.112:3306/haradb_new?serverTimezone=Asia/Colombo&cachePrepStmts=true&useServerPrepStmts=true&rewriteBatchedStatements=true
+    username: wireme-core
+    password: Wireme1234#
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+  cloud:
+    discovery:
+      enabled: true
+
+application:
+  jwt:
+    secretKey: securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure
+    tokenPrefix: Bearer
+    tokenExpirationAfterMillis: 604800000       #86400000,3600000,60,000  Token is issued for a week, has to change once go live
+  refresh:
+    tokenExpirationAfterMillis: 120000
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://eureka:password@localhost:8761/eureka
+#
+management:
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0

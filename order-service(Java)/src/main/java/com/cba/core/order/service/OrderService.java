@@ -33,7 +33,7 @@ public class OrderService {
         skuCodes.add("003");
 
         InventoryResponse[] inventoryResponseArray = webClientBuilder.build().get()
-                .uri("http://inventory-service/inventory/api/inventory",
+                .uri("http://inventory-service:8094/inventory/api/inventory",
                         uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
