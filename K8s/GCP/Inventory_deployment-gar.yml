@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: inventory-service
+  name: inventory-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service
+  strategy: {}
+  template:
+    metadata:
+
+      labels:
+        app: inventory-service
+    spec:
+      containers:
+        - image: asia-south1-docker.pkg.dev/bamboo-zone-425706-v9/repo2/inventory-service:v1
+          name: inventory-service
+          ports:
+            - containerPort: 8094
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "300m"
+              memory: "512Mi"
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: inventory-service
+  name: inventory-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: "8094"
+      port: 8094
+      targetPort: 8094
+  selector:
+    app: inventory-service
+status:
+  loadBalancer: {}

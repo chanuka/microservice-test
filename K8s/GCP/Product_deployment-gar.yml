@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: product-service
+  name: product-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  strategy: {}
+  template:
+    metadata:
+
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - image: asia-south1-docker.pkg.dev/bamboo-zone-425706-v9/repo2/product-service:v1
+          name: product-service
+          ports:
+            - containerPort: 8093
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "300m"
+              memory: "512Mi"
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: product-service
+  name: product-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: "8093"
+      port: 8093
+      targetPort: 8093
+  selector:
+    app: product-service
+status:
+  loadBalancer: {}

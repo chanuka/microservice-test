@@ -18,6 +18,7 @@ public class NotificationApplication {
     public void handleNotification(OrderPlacedEvent orderPlacedEvent) {
         // send out an email notification
         log.info("Received Notification for Order - {}", orderPlacedEvent.getOrderNumber());
+        System.out.println("Received Notification for Order - {} "+ orderPlacedEvent.getOrderNumber());
     }
 }
 

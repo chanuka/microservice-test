@@ -1,7 +1,10 @@
 package com.cba.core.order.controller;
 
+import com.cba.core.order.dto.OrderLineItemsDto;
 import com.cba.core.order.service.OrderService;
 import com.cba.core.order.dto.OrderRequest;
+//import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+//import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -21,16 +25,16 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<String> getOrder(@PathVariable Long orderId) {
+    public ResponseEntity<List<OrderLineItemsDto>> getOrder(@PathVariable Long orderId) {
         // Business logic for fetching an order
-        System.out.println("called me");
-
+        System.out.println("called me this time");
+        List<OrderLineItemsDto> list = null;
         try {
-            orderService.findAll();
+            list = orderService.findAll();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return ResponseEntity.ok("Order details for ID: " + orderId);
+        return ResponseEntity.ok(list);
     }
 
 

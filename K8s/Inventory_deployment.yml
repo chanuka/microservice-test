@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: inventory-service
+  name: inventory-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service
+  strategy: {}
+  template:
+    metadata:
+
+      labels:
+        app: inventory-service
+    spec:
+      containers:
+        - env:
+            - name: EUREKA_INSTANCE_PREFERIPADDRESS
+              value: "true"         
+          image: chanudocker1/inventory-service:1.0.0
+          name: inventory-service
+          ports:
+            - containerPort: 8094
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: inventory-service
+  name: inventory-service
+spec:
+  type: NodePort
+  ports:
+    - name: "8094"
+      port: 8094
+      targetPort: 8094
+      nodePort: 30078
+  selector:
+    app: inventory-service
+status:
+  loadBalancer: {}
